@@ -41,13 +41,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th id= "first">Hello</th>
-                    <th id= 'second'></th>
-                    <th id= 'third'></th>
-                    <th id = 'four'></th>
-                    <th id = 'five'></th>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -136,11 +129,37 @@ $("#submit").on("click", function(event) {
 
     var newRow = $('<tr>');
 
-    newRow.text(newName);
+    $('#first').text(newName);
     $('#second').text(newRole);
     $('#third').text(newStart);
     $('#five').text(newRate);
 
+
+    var now = new Date();
+console.log(now.toString().substr(16,8));
+
+
+
+      var timepretty = moment.unix(ttime).format("HH:mm");
+      var trtime = moment().diff(moment.unix(ttime, "X"), "HH:mm");
+      var divided = trtime / tfrequency;
+      console.log("here is trtime " + divided);
+      var firstTimeConverted = moment(ttime, "hh:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
+      var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+    // Time apart (remainder)
+    var tRemainder = diffTime % tfrequency;
+    console.log("Remainder: " + tRemainder);
+    // Minutes Away
+    var minutesAway = tfrequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + minutesAway);
+    // Next Train Arrival
+    var nextArrival = moment().add(minutesAway, "minutes").format("HH:mm");
+    console.log("ARRIVAL TIME: " + moment(nextArrival).format("HH:mm"));
+
+    $("#employee-table > tbody").append("<tr><td>" + tname + "</td><td>" + tdestination + "</td><td>" +
+  timepretty + "</td><td>" + tfrequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway + "</td></tr>");
 
   });
 
